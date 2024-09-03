@@ -1,0 +1,13 @@
+package com.greensphere.greenspherewastecollectionservice;
+
+import org.junit.jupiter.api.Test;
+import org.springframework.boot.test.context.SpringBootTest;
+
+@SpringBootTest
+class GreensphereWastecollectionserviceApplicationTests {
+
+    @Test
+    void contextLoads() {
+    }
+
+}

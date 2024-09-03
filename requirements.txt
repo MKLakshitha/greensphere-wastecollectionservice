@@ -1,0 +1,8 @@
+ipykernel
+torch
+filelock
+sympy
+mkl<=2021.4.0,>=2021.1.1 
+intel-openmp==2021.* 
+tbb==2021.*
+mpmath<1.4,>=1.1.0 
