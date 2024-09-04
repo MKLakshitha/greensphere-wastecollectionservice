@@ -34,7 +34,7 @@ public interface WasteDataRepository extends JpaRepository<WasteData, Long> {
      * @return the count of waste data records
      */
     @Query("SELECT COUNT(wd) FROM WasteData wd WHERE wd.userId = :userId")
-    long countByUserId(@Param("userId") Long userId);
+    long countByUserId(@Param("userId") String userId);
 
     /**
      * Counts the number of waste processing records by date.

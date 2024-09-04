@@ -11,11 +11,11 @@ import java.util.List;
  */
 public interface WasteDataService {
 
-    void saveWasteData(Long userId, String category, Date collectionDate, BigDecimal weight, String location);
+    void saveWasteData(String userId, String category, Date collectionDate, BigDecimal weight, String location);
 
     void deleteWasteDataById(Long wasteId);
 
-    long countWasteDataByUserId(Long userId);
+    long countWasteDataByUserId(String userId);
 
     long countWasteProcessingByDate(Date date);
 
