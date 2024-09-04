@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * Repository interface for WasteData entities.
@@ -43,4 +44,14 @@ public interface WasteDataRepository extends JpaRepository<WasteData, Long> {
      */
     @Query("SELECT COUNT(wd) FROM WasteData wd WHERE wd.collectionDate = :date")
     long countByCollectionDate(@Param("date") Date date);
+
+
+    /**
+     * Retrieves all waste data records by user ID.
+     *
+     * @param userId the ID of the user
+     * @return a list of waste data records
+     */
+    @Query("SELECT wd FROM WasteData wd WHERE wd.userId = :userId")
+    List<WasteData> findAllByUserId(@Param("userId") Long userId);
 }

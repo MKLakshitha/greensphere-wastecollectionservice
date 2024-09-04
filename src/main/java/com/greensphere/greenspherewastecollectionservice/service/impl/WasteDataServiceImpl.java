@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.List;
 
 /**
  * Implementation of WasteDataService interface for managing waste data.
@@ -57,6 +58,24 @@ public class WasteDataServiceImpl implements WasteDataService {
         } catch (Exception e) {
             logger.error("Unexpected error saving waste data for userId: {}", userId, e);
             throw new WasteDataException("An unexpected error occurred while saving waste data", e);
+        }
+    }
+
+    /**
+     * Retrieves all waste data records by user ID.
+     *
+     * @param userId the ID of the user
+     * @return a list of waste data records
+     */
+    @Override
+    public List<WasteData> findAllByUserId(Long userId) {
+        try {
+            List<WasteData> wasteDataList = wasteDataRepository.findAllByUserId(userId);
+            logger.info("Retrieved {} waste data records for userId: {}", wasteDataList.size(), userId);
+            return wasteDataList;
+        } catch (Exception e) {
+            logger.error("Error retrieving waste data records for userId: {}", userId, e);
+            throw new WasteDataException("An error occurred while retrieving waste data records", e);
         }
     }
 
@@ -111,6 +130,8 @@ public class WasteDataServiceImpl implements WasteDataService {
             throw new WasteDataException("An error occurred while counting waste processing records", e);
         }
     }
+
+
 
     /**
      * Validates waste data fields.

@@ -15,7 +15,7 @@ public class WasteData {
     @Column(name = "user_id")
     private Long userId;
 
-    @Column(name = "category", unique = true, length = 50)
+    @Column(name = "category",  length = 50)
     private String category;
 
     @Column(name = "collection_date")

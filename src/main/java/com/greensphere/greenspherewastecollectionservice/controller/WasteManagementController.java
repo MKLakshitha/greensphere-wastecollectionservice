@@ -9,9 +9,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.List;
 
 /**
  * Controller for handling waste management operations.
@@ -115,4 +117,23 @@ public class WasteManagementController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An unexpected error occurred.");
         }
     }
+    /**
+     * Retrieves all waste data records by user ID.
+     *
+     * @param userId the ID of the user
+     * @return a ResponseEntity containing the list of waste data records and HTTP status
+     */
+    @GetMapping("/user")
+    public List<WasteData> getWasteDataByUserId(@RequestParam Long userId) {
+        try {
+            List<WasteData> wasteDataList = wasteDataService.findAllByUserId(userId);
+            logger.info("Retrieved {} waste data records for userId: {}", wasteDataList.size(), userId);
+            return wasteDataList;
+        } catch (Exception e) {
+            logger.error("Error retrieving waste data for userId: {}", userId, e);
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Failed to retrieve waste data", e);
+        }
+
+    }
+
 }
