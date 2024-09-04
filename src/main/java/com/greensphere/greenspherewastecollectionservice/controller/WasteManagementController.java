@@ -100,6 +100,25 @@ public class WasteManagementController {
         }
     }
 
+
+    /**
+     * Endpoint to get the count of waste data records by user ID.
+     *
+     * @param category ID of the user
+     * @return ResponseEntity containing the count of waste data records
+     */
+    @GetMapping("/count/by-category/{category}")
+    public ResponseEntity<String> countWasteDataByCategory(@PathVariable String category) {
+        try {
+            logger.info("Request received to count waste data for category: {}", category);
+            long count = wasteDataService.countWasteByCategory(category);
+            return ResponseEntity.ok("Count of waste data for category " + category + ": " + count);
+        } catch (Exception e) {
+            logger.error("Error counting waste data records for category: {}", category, e);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An unexpected error occurred.");
+        }
+    }
+
     /**
      * Endpoint to get the count of waste processing records by collection date.
      *
@@ -107,7 +126,7 @@ public class WasteManagementController {
      * @return ResponseEntity containing the count of waste processing records
      */
     @GetMapping("/count/by-date")
-    public ResponseEntity<String> countWasteProcessingByDate(@RequestParam Date date) {
+    public ResponseEntity<String> countWasteProcessingByDate(@RequestParam String date) {
         try {
             logger.info("Request received to count waste processing for date: {}", date);
             long count = wasteDataService.countWasteProcessingByDate(date);

@@ -17,7 +17,7 @@ public interface WasteDataService {
 
     long countWasteDataByUserId(Long userId);
 
-    long countWasteProcessingByDate(Date date);
+    long countWasteProcessingByDate(String date);
 
     /**
      * Retrieves all waste data records by user ID.
@@ -26,4 +26,6 @@ public interface WasteDataService {
      * @return a list of waste data records
      */
     List<WasteData> findAllByUserId(Long userId);
+
+    long countWasteByCategory(String category);
 }

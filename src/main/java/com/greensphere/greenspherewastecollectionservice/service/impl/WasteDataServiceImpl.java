@@ -113,6 +113,27 @@ public class WasteDataServiceImpl implements WasteDataService {
         }
     }
 
+
+
+    /**
+     * Counts the waste data records by user ID.
+     *
+     * @param category the ID of the user
+     * @return the count of waste data records
+     */
+    @Override
+    public long countWasteByCategory(String category) {
+        try {
+            long count = wasteDataRepository.countByCategory(category);
+            logger.info("Count of waste data for category {}: {}", category, count);
+            return count;
+        } catch (Exception e) {
+            logger.error("Error counting waste data records for category: {}", category, e);
+            throw new WasteDataException("An error occurred while counting waste data records", e);
+        }
+    }
+
+
     /**
      * Counts the waste processing records by collection date.
      *
@@ -120,7 +141,7 @@ public class WasteDataServiceImpl implements WasteDataService {
      * @return the count of waste processing records
      */
     @Override
-    public long countWasteProcessingByDate(Date date) {
+    public long countWasteProcessingByDate(String date) {
         try {
             long count = wasteDataRepository.countByCollectionDate(date);
             logger.info("Count of waste processing for date {}: {}", date, count);

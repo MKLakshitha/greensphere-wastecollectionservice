@@ -8,7 +8,6 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -43,7 +42,17 @@ public interface WasteDataRepository extends JpaRepository<WasteData, Long> {
      * @return the count of waste processing records
      */
     @Query("SELECT COUNT(wd) FROM WasteData wd WHERE wd.collectionDate = :date")
-    long countByCollectionDate(@Param("date") Date date);
+    long countByCollectionDate(@Param("date") String date);
+
+
+    /**
+     * Counts the number of waste processing records by date.
+     *
+     * @param category the date of waste processing
+     * @return the count of waste processing records
+     */
+    @Query("SELECT COUNT(wd) FROM WasteData wd WHERE wd.category = :category")
+    long countByCategory(@Param("category") String category);
 
 
     /**
