@@ -13,7 +13,7 @@ public class SystemLogsService {
     @Autowired
     private SystemLogsRepository systemLogsRepository;
 
-    public SystemLogs saveSystemLog(Long userId, String action) {
+    public SystemLogs saveSystemLog(String userId, String action) {
         SystemLogs systemLogs = new SystemLogs();
         systemLogs.setUserId(userId);
         systemLogs.setAction(action);

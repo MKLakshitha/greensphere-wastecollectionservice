@@ -54,7 +54,7 @@ public class WasteManagementController {
         try {
             String userId =  appUser.getUsername();
             logger.info("Request received to save waste data for userId: {}", userId);
-            wasteDataService.saveWasteData(userId, category, collectionDate, weight, location);
+            wasteDataService.saveWasteData(userId, category, collectionDate.toString(), weight, location);
             return ResponseEntity.status(HttpStatus.CREATED).body("Waste data saved successfully.");
         } catch (WasteDataException e) {
             logger.error("Error saving waste data: {}", e.getMessage());
@@ -143,12 +143,17 @@ public class WasteManagementController {
     /**
      * Retrieves all waste data records by user ID.
      *
-     * @param userId the ID of the user
+     * @param appUser the ID of the user
      * @return a ResponseEntity containing the list of waste data records and HTTP status
      */
     @GetMapping("/user")
-    public List<WasteData> getWasteDataByUserId(@RequestParam Long userId) {
+    public List<WasteData> getWasteDataByUserId(@RequestAttribute("appUser") AppUser appUser)
+    {
+        String userId = null;
         try {
+
+
+            userId = appUser.getUsername();
             List<WasteData> wasteDataList = wasteDataService.findAllByUserId(userId);
             logger.info("Retrieved {} waste data records for userId: {}", wasteDataList.size(), userId);
             return wasteDataList;

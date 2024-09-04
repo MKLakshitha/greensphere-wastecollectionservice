@@ -1,18 +1,22 @@
 package com.greensphere.greenspherewastecollectionservice.model;
 
 import jakarta.persistence.*;
+import lombok.Getter;
+
 import java.util.Date;
 
+@Getter
 @Entity
 @Table(name = "system_logs")
 public class SystemLogs {
 
+    // Getters and Setters
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(name = "user_id")
-    private Long userId;
+    private String userId;
 
     @Column(name = "action", length = 255)
     private String action;
@@ -21,33 +25,16 @@ public class SystemLogs {
     @Temporal(TemporalType.TIMESTAMP)
     private Date timestamp;
 
-    // Getters and Setters
-    public Long getId() {
-        return id;
-    }
-
     public void setId(Long id) {
         this.id = id;
     }
 
-    public Long getUserId() {
-        return userId;
-    }
-
-    public void setUserId(Long userId) {
+    public void setUserId(String userId) {
         this.userId = userId;
-    }
-
-    public String getAction() {
-        return action;
     }
 
     public void setAction(String action) {
         this.action = action;
-    }
-
-    public Date getTimestamp() {
-        return timestamp;
     }
 
     public void setTimestamp(Date timestamp) {

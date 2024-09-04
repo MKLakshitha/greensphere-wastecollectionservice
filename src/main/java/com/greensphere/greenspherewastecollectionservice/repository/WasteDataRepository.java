@@ -62,5 +62,5 @@ public interface WasteDataRepository extends JpaRepository<WasteData, Long> {
      * @return a list of waste data records
      */
     @Query("SELECT wd FROM WasteData wd WHERE wd.userId = :userId")
-    List<WasteData> findAllByUserId(@Param("userId") Long userId);
+    List<WasteData> findAllByUserId(@Param("userId") String userId);
 }

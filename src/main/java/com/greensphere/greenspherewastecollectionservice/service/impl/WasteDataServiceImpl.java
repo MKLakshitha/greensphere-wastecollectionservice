@@ -39,7 +39,7 @@ public class WasteDataServiceImpl implements WasteDataService {
      * @param location       Location of waste collection
      */
     @Override
-    public void saveWasteData(String userId, String category, Date collectionDate, BigDecimal weight, String location) {
+    public void saveWasteData(String userId, String category, String collectionDate, BigDecimal weight, String location) {
         try {
             validateWasteData(userId, category, weight, location);
 
@@ -68,7 +68,7 @@ public class WasteDataServiceImpl implements WasteDataService {
      * @return a list of waste data records
      */
     @Override
-    public List<WasteData> findAllByUserId(Long userId) {
+    public List<WasteData> findAllByUserId(String userId) {
         try {
             List<WasteData> wasteDataList = wasteDataRepository.findAllByUserId(userId);
             logger.info("Retrieved {} waste data records for userId: {}", wasteDataList.size(), userId);
@@ -164,9 +164,9 @@ public class WasteDataServiceImpl implements WasteDataService {
      * @throws WasteDataException if any validation fails
      */
     private void validateWasteData(String userId, String category, BigDecimal weight, String location) {
-//        if (userId == null || userId <= 0) {
-//            throw new WasteDataException(WasteDataConstants.INVALID_USER_ID);
-//        }
+        if (userId == null ) {
+            throw new WasteDataException(WasteDataConstants.INVALID_USER_ID);
+        }
         if (category == null || category.trim().isEmpty()) {
             throw new WasteDataException(WasteDataConstants.INVALID_CATEGORY);
         }

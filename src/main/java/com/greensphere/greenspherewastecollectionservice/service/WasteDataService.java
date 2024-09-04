@@ -11,7 +11,7 @@ import java.util.List;
  */
 public interface WasteDataService {
 
-    void saveWasteData(String userId, String category, Date collectionDate, BigDecimal weight, String location);
+    void saveWasteData(String userId, String category, String collectionDate, BigDecimal weight, String location);
 
     void deleteWasteDataById(Long wasteId);
 
@@ -25,7 +25,7 @@ public interface WasteDataService {
      * @param userId the ID of the user
      * @return a list of waste data records
      */
-    List<WasteData> findAllByUserId(Long userId);
+    List<WasteData> findAllByUserId(String userId);
 
     long countWasteByCategory(String category);
 }
