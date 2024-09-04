@@ -39,7 +39,7 @@ public class WasteDataServiceImpl implements WasteDataService {
      * @param location       Location of waste collection
      */
     @Override
-    public void saveWasteData(Long userId, String category, Date collectionDate, BigDecimal weight, String location) {
+    public void saveWasteData(String userId, String category, Date collectionDate, BigDecimal weight, String location) {
         try {
             validateWasteData(userId, category, weight, location);
 
@@ -102,7 +102,7 @@ public class WasteDataServiceImpl implements WasteDataService {
      * @return the count of waste data records
      */
     @Override
-    public long countWasteDataByUserId(Long userId) {
+    public long countWasteDataByUserId(String userId) {
         try {
             long count = wasteDataRepository.countByUserId(userId);
             logger.info("Count of waste data for userId {}: {}", userId, count);
@@ -163,10 +163,10 @@ public class WasteDataServiceImpl implements WasteDataService {
      * @param location Location of waste collection
      * @throws WasteDataException if any validation fails
      */
-    private void validateWasteData(Long userId, String category, BigDecimal weight, String location) {
-        if (userId == null || userId <= 0) {
-            throw new WasteDataException(WasteDataConstants.INVALID_USER_ID);
-        }
+    private void validateWasteData(String userId, String category, BigDecimal weight, String location) {
+//        if (userId == null || userId <= 0) {
+//            throw new WasteDataException(WasteDataConstants.INVALID_USER_ID);
+//        }
         if (category == null || category.trim().isEmpty()) {
             throw new WasteDataException(WasteDataConstants.INVALID_CATEGORY);
         }

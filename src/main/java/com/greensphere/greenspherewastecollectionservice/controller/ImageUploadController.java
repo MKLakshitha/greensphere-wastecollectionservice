@@ -75,7 +75,7 @@ public class ImageUploadController {
         }
 
         // Save the waste data including weight and location
-        wasteDataService.saveWasteData(1L, result, new Date(), weight, location); // Adjust userId
+        wasteDataService.saveWasteData("", result, new Date(), weight, location); // Adjust userId
 
         // Update system logs
         systemLogsService.saveSystemLog(1L, "Uploaded file classified as " + result); // Adjust userId

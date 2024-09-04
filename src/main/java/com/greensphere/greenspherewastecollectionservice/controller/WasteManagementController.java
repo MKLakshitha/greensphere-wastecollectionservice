@@ -1,11 +1,13 @@
 package com.greensphere.greenspherewastecollectionservice.controller;
 
+import com.greensphere.greenspherewastecollectionservice.dto.AppUser;
 import com.greensphere.greenspherewastecollectionservice.model.WasteData;
 import com.greensphere.greenspherewastecollectionservice.service.WasteDataService;
 import com.greensphere.greenspherewastecollectionservice.exception.WasteDataException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -34,7 +36,7 @@ public class WasteManagementController {
     /**
      * Endpoint to save waste data.
      *
-     * @param userId         ID of the user
+//     * @param userId         ID of the user
      * @param category       Category of the waste
      * @param collectionDate Date of waste collection
      * @param weight         Weight of the waste
@@ -43,12 +45,14 @@ public class WasteManagementController {
      */
     @PostMapping("/save")
     public ResponseEntity<String> saveWasteData(
-            @RequestParam Long userId,
+//            @RequestParam Long userId,
             @RequestParam String category,
-            @RequestParam Date collectionDate,
+            @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") Date collectionDate,  // Specify the date format here
             @RequestParam BigDecimal weight,
-            @RequestParam String location) {
+            @RequestParam String location,
+            @RequestAttribute("appUser") AppUser appUser) {
         try {
+            String userId =  appUser.getUsername();
             logger.info("Request received to save waste data for userId: {}", userId);
             wasteDataService.saveWasteData(userId, category, collectionDate, weight, location);
             return ResponseEntity.status(HttpStatus.CREATED).body("Waste data saved successfully.");
@@ -56,7 +60,7 @@ public class WasteManagementController {
             logger.error("Error saving waste data: {}", e.getMessage());
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Error: " + e.getMessage());
         } catch (Exception e) {
-            logger.error("Unexpected error saving waste data for userId: {}", userId, e);
+            logger.error("Unexpected error saving waste data for userId : {} ", e);
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An unexpected error occurred.");
         }
     }
@@ -85,17 +89,17 @@ public class WasteManagementController {
     /**
      * Endpoint to get the count of waste data records by user ID.
      *
-     * @param userId ID of the user
      * @return ResponseEntity containing the count of waste data records
      */
-    @GetMapping("/count/by-user/{userId}")
-    public ResponseEntity<String> countWasteDataByUserId(@PathVariable Long userId) {
+    @GetMapping("/count/by-user")
+    public ResponseEntity<String> countWasteDataByUserId(@RequestAttribute("user") AppUser appUser) {
         try {
+            String userId = appUser.getUsername();
             logger.info("Request received to count waste data for userId: {}", userId);
             long count = wasteDataService.countWasteDataByUserId(userId);
             return ResponseEntity.ok("Count of waste data for userId " + userId + ": " + count);
         } catch (Exception e) {
-            logger.error("Error counting waste data records for userId: {}", userId, e);
+            logger.error("Error counting waste data records for userId : {} ", e);
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An unexpected error occurred.");
         }
     }
