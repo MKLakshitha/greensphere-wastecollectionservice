@@ -92,7 +92,7 @@ public class WasteManagementController {
      * @return ResponseEntity containing the count of waste data records
      */
     @GetMapping("/count/by-user")
-    public ResponseEntity<String> countWasteDataByUserId(@RequestAttribute("user") AppUser appUser) {
+    public ResponseEntity<String> countWasteDataByUserId(@RequestAttribute("appUser") AppUser appUser) {
         try {
             String userId = appUser.getUsername();
             logger.info("Request received to count waste data for userId: {}", userId);
@@ -151,6 +151,7 @@ public class WasteManagementController {
     {
         String userId = null;
         try {
+
 
 
             userId = appUser.getUsername();
