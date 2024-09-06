@@ -25,6 +25,9 @@ public class SystemLogs {
     @Temporal(TemporalType.TIMESTAMP)
     private Date timestamp;
 
+    @Column(name = "details",length = 255)
+    private String details;
+
     public void setId(Long id) {
         this.id = id;
     }
@@ -35,6 +38,10 @@ public class SystemLogs {
 
     public void setAction(String action) {
         this.action = action;
+    }
+
+    public void setDetails(String details) {
+        this.details = details;
     }
 
     public void setTimestamp(Date timestamp) {

@@ -112,7 +112,7 @@ public class ImageUploadController {
 
 
         // Update system logs
-        systemLogsService.saveSystemLog("", "Uploaded file classified as " + result); // Adjust userId
+        systemLogsService.saveSystemLog(userId, "Uploaded file classified as " + result,"Classified"); // Adjust userId
 
         return ResponseEntity.ok(result);
     }
