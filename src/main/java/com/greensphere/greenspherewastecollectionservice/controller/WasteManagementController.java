@@ -2,6 +2,7 @@ package com.greensphere.greenspherewastecollectionservice.controller;
 
 import com.greensphere.greenspherewastecollectionservice.dto.AppUser;
 import com.greensphere.greenspherewastecollectionservice.model.WasteData;
+import com.greensphere.greenspherewastecollectionservice.model.WasteResponse;
 import com.greensphere.greenspherewastecollectionservice.service.WasteDataService;
 import com.greensphere.greenspherewastecollectionservice.exception.WasteDataException;
 import org.slf4j.Logger;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -163,6 +165,24 @@ public class WasteManagementController {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Failed to retrieve waste data", e);
         }
 
+    }
+    @GetMapping("/user-with-pricing")
+    public ResponseEntity<List<WasteResponse>> getUserWasteWithPricing(@RequestAttribute("appUser") AppUser appUser) {
+        String userId = appUser.getUsername();
+        List<WasteData> wasteData = wasteDataService.findAllByUserId(userId);
+        List<WasteResponse> response = new ArrayList<>();
+
+        for (WasteData waste : wasteData) {
+            WasteResponse wasteResponse = new WasteResponse();
+            wasteResponse.setCategory(waste.getCategory());
+            wasteResponse.setCollectionDate(waste.getCollectionDate());
+            wasteResponse.setWeight(waste.getWeight());
+            wasteResponse.setPrice(100); // Rs.100 for each record
+            wasteResponse.setPoints(1); // 1 point for each record
+            response.add(wasteResponse);
+        }
+
+        return ResponseEntity.ok(response);
     }
 
 }
